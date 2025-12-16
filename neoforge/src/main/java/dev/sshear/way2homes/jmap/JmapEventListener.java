@@ -56,7 +56,7 @@ public class JmapEventListener {
 
     @SubscribeEvent
     public void register(RegisterPayloadHandlersEvent event) {
-        final PayloadRegistrar registrar = event.registrar("1");
+        final PayloadRegistrar registrar = event.registrar("1").optional();
         registrar.playToClient(
                 HomeDataPayload.TYPE,
                 HomeDataPayload.STREAM_CODEC,
