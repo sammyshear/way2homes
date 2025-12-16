@@ -31,13 +31,10 @@ public class Way2Homes extends JavaPlugin {
         }
         config.options().copyDefaults(true);
         saveConfig();
-        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "way2homes:home_data");
-        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "way2homes:del_home_data");
         if (this.getConfig().getBoolean("EssentialsX") &&
                 !this.getConfig().getBoolean("HuskHomes")) {
             Constants.LOG.info("hooking into essentialsx");
             getServer().getPluginManager().registerEvents(new EssentialsListener(), this);
-            Constants.LOG.info("hooked into essentialsx");
         } else if (this.getConfig().getBoolean("HuskHomes")) {
             Constants.LOG.info("hooking into huskhomes");
             getServer().getPluginManager().registerEvents(new HuskHomesListener(), this);
