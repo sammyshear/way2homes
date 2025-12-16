@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  MODRINTH_PROJECT_ID: "way2homes"  # Replace this with your actual project ID
+  MODRINTH_PROJECT_ID: "8bXOLFK9"  # Replace this with your actual project ID
 
 jobs:
   publish:
