@@ -10,11 +10,12 @@ import net.fabricmc.loader.api.FabricLoader;
 public class JmapPlugin implements IClientPlugin {
 
     private IClientAPI jmApi = null;
+    private JmapEventListener eventListener;
 
     @Override
     public void initialize(IClientAPI jmApi) {
         this.jmApi = jmApi;
-        JmapEventListener eventListener = new JmapEventListener(jmApi);
+        this.eventListener = new JmapEventListener(jmApi);
     }
 
     @Override

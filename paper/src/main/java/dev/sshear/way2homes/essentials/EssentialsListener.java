@@ -20,7 +20,7 @@ public class EssentialsListener implements Listener {
                 var homeData = new HomeData(home.getName(), home.getX(), home.getY(), home.getZ());
                 HomePayloadSender.sendHomeData(owner.getBase(), homeData);
             } catch (Exception e) {
-                Constants.LOG.error("{}", e.getMessage());
+                Constants.LOG.error("Failed to send home data for home: {}", home.getName(), e);
             }
         } else {
             var oldLoc = event.getOldLocation();
@@ -29,7 +29,7 @@ public class EssentialsListener implements Listener {
                 var homeData = new HomeData(home.getName(), home.getX(), home.getY(), home.getZ());
                 DelHomePayloadSender.sendHomeData(owner.getBase(), homeData);
             } catch (Exception e) {
-                Constants.LOG.error("{}", e.getMessage());
+                Constants.LOG.error("Failed to send home data for home: {}", home.getName(), e);
             }
         }
     }

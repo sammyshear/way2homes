@@ -12,6 +12,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+
 public final class HomePayloadSender {
 
     private static final ResourceLocation IDENTIFIER =
@@ -24,7 +27,7 @@ public final class HomePayloadSender {
         ServerPlayer nms = ((CraftPlayer) player).getHandle();
 
         FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-        HomeDataCodec.write(buf.nioBuffer(), data);
+        writeHomeData(buf, data);
 
         //? if <1.21.4 {
         /*DiscardedPayload payload = new DiscardedPayload(IDENTIFIER, buf.asByteBuf());
@@ -38,4 +41,17 @@ public final class HomePayloadSender {
                 new ClientboundCustomPayloadPacket(payload)
         );
     }
+
+    private static void writeHomeData(FriendlyByteBuf buf, HomeData data) {
+        // Write string (name)
+        byte[] nameBytes = data.name().getBytes(StandardCharsets.UTF_8);
+        buf.writeVarInt(nameBytes.length);
+        buf.writeBytes(nameBytes);
+
+        // Write coordinates as varints
+        buf.writeVarInt(data.x());
+        buf.writeVarInt(data. y());
+        buf.writeVarInt(data.z());
+    }
+
 }
