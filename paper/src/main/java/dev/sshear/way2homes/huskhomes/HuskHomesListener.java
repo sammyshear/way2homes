@@ -1,12 +1,13 @@
 package dev.sshear.way2homes.huskhomes;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import dev.sshear.way2homes.payloads.DelHomePayloadSender;
+import dev.sshear.way2homes.payloads.HomePayloadSender;
 import dev.sshear.way2homes.Constants;
-import dev.sshear.way2homes.Way2Homes;
+import dev.sshear.way2homes.HomeData;
 import net.william278.huskhomes.event.HomeCreateEvent;
 import net.william278.huskhomes.event.HomeDeleteEvent;
 import net.william278.huskhomes.event.HomeEditEvent;
+import net.william278.huskhomes.position.Home;
 import net.william278.huskhomes.position.Position;
 import net.william278.huskhomes.user.User;
 import org.bukkit.Bukkit;
@@ -19,7 +20,18 @@ public class HuskHomesListener implements Listener {
     public void onModifyHome(HomeEditEvent event) {
         var home = event.getHome();
         var owner = home.getOwner();
+        var oldPos = event.getOriginalHome();
+        deleteHomeData(home, owner, oldPos);
         newHomeData(owner, home, home.getName());
+    }
+
+    private void deleteHomeData(Home home, User owner, Home oldPos) {
+        try {
+            var homeData = new HomeData(home.getName(), (int) oldPos.getX(), (int) oldPos.getY(), (int) oldPos.getZ());
+            DelHomePayloadSender.sendHomeData(Bukkit.getPlayer(owner.getUuid()), homeData);
+        } catch (Exception e) {
+            Constants.LOG.error("Failed to send home data for home: {}", home.getName(), e);
+        }
     }
 
     @EventHandler
@@ -30,25 +42,18 @@ public class HuskHomesListener implements Listener {
     }
 
     private void newHomeData(User owner, Position loc, String name) {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF(name);
-        out.writeInt(((int) loc.getX()));
-        out.writeInt((int) loc.getY());
-        out.writeInt((int) loc.getZ());
-        Bukkit.getPlayer(owner.getUuid()).sendPluginMessage(Way2Homes.getPlugin(Way2Homes.class),
-                "way2homes:home_data", out.toByteArray());
+        try {
+            var homeData = new HomeData(name, (int) loc.getX(), (int) loc.getY(), (int) loc.getZ());
+            HomePayloadSender.sendHomeData(Bukkit.getPlayer(owner.getUuid()), homeData);
+        } catch (Exception e) {
+            Constants.LOG.error("Failed to send home data for home: {}", name, e);
+        }
     }
 
     @EventHandler
     public void onDeleteHome(HomeDeleteEvent event) {
         var home = event.getHome();
         var owner = home.getOwner();
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF(home.getName());
-        out.writeInt(((int) home.getX()));
-        out.writeInt((int) home.getY());
-        out.writeInt((int) home.getZ());
-        Bukkit.getPlayer(owner.getUuid()).sendPluginMessage(Way2Homes.getPlugin(Way2Homes.class),
-                "way2homes:del_home_data", out.toByteArray());
+        deleteHomeData(home, owner, home);
     }
 }

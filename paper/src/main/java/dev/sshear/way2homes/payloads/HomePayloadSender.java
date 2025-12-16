@@ -1,8 +1,9 @@
-package dev.sshear.payloads;
+package dev.sshear.way2homes.payloads;
 
 import dev.sshear.way2homes.Constants;
 import dev.sshear.way2homes.HomeData;
 import dev.sshear.way2homes.HomeDataCodec;
+
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
@@ -14,11 +15,10 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-
-public final class DelHomePayloadSender {
+public final class HomePayloadSender {
 
     private static final ResourceLocation IDENTIFIER =
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "del_home_data");
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "home_data");
 
     public static void sendHomeData(
             org.bukkit.entity.Player player,
@@ -53,4 +53,5 @@ public final class DelHomePayloadSender {
         buf.writeVarInt(data. y());
         buf.writeVarInt(data.z());
     }
+
 }
