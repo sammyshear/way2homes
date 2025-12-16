@@ -1,0 +1,134 @@
+name: Publish to Modrinth
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+env:
+  MODRINTH_PROJECT_ID: "way2homes"  # Replace this with your actual project ID
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Fabric builds
+          - loader:  fabric
+            mc-version: '1.21.1'
+          - loader: fabric
+            mc-version: '1.21.3'
+          - loader: fabric
+            mc-version: '1.21.4'
+          - loader: fabric
+            mc-version: '1.21.5'
+          - loader: fabric
+            mc-version:  '1.21.6'
+          - loader: fabric
+            mc-version: '1.21.7'
+          - loader: fabric
+            mc-version: '1.21.8'
+          - loader: fabric
+            mc-version: '1.21.9'
+          - loader: fabric
+            mc-version: '1.21.10'
+
+          # NeoForge builds
+          - loader: neoforge
+            mc-version: '1.21.1'
+          - loader: neoforge
+            mc-version: '1.21.3'
+          - loader: neoforge
+            mc-version: '1.21.4'
+          - loader: neoforge
+            mc-version: '1.21.5'
+          - loader: neoforge
+            mc-version: '1.21.6'
+          - loader: neoforge
+            mc-version: '1.21.7'
+          - loader: neoforge
+            mc-version: '1.21.8'
+          - loader: neoforge
+            mc-version:  '1.21.9'
+          - loader: neoforge
+            mc-version: '1.21.10'
+
+          # Paper builds
+          - loader: paper
+            mc-version: '1.21.1'
+          - loader: paper
+            mc-version: '1.21.3'
+          - loader: paper
+            mc-version: '1.21.4'
+          - loader: paper
+            mc-version: '1.21.5'
+          - loader: paper
+            mc-version:  '1.21.6'
+          - loader: paper
+            mc-version: '1.21.7'
+          - loader: paper
+            mc-version: '1.21.8'
+          - loader: paper
+            mc-version: '1.21.9'
+          - loader: paper
+            mc-version: '1.21.10'
+
+    steps:
+      - name: Checkout repository
+        uses:  actions/checkout@v4
+        with:
+          submodules:  true
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name:  Build ${{ matrix.loader }} for MC ${{ matrix.mc-version }}
+        run: ./gradlew ${{ matrix.loader }}:${{ matrix.mc-version }} build
+
+      - name: Find JAR file
+        id: find-jar
+        run: |
+          # Find the built JAR (excluding sources and dev jars)
+          JAR_PATH=$(find ${{ matrix.loader }}/versions/${{ matrix.mc-version }}/build/libs -name "*.jar" !  -name "*-sources.jar" ! -name "*-dev.jar" -type f | head -n 1)
+          
+          if [ -z "$JAR_PATH" ]; then
+            echo "Error: Could not find JAR file"
+            ls -R ${{ matrix.loader }}/versions/${{ matrix.mc-version }}/build/libs || echo "Build libs directory not found"
+            exit 1
+          fi
+          
+          echo "jar_path=$JAR_PATH" >> $GITHUB_OUTPUT
+          echo "Found JAR: $JAR_PATH"
+          ls -lh "$JAR_PATH"
+
+      - name: Get mod version
+        id: mod-version
+        run: |
+          VERSION=$(grep "^mod. version=" gradle.properties | cut -d'=' -f2)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Mod version: $VERSION"
+
+      - name: Make publish script executable
+        run: chmod +x scripts/publish-modrinth.sh
+
+      - name: Publish to Modrinth
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          ./scripts/publish-modrinth.sh \
+            "${{ matrix.loader }}" \
+            "${{ matrix.mc-version }}" \
+            "${{ steps.find-jar.outputs.jar_path }}" \
+            "${{ env.MODRINTH_PROJECT_ID }}" \
+            "${{ steps.mod-version.outputs.version }}"
