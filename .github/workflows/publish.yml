@@ -88,13 +88,13 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
       - name:  Build ${{ matrix.loader }} for MC ${{ matrix.mc-version }}
-        run: ./gradlew ${{ matrix.loader }}:${{ matrix.mc-version }} build
+        run: ./gradlew :${{ matrix.loader }}:${{ matrix.mc-version }}:build
 
       - name: Find JAR file
         id: find-jar
