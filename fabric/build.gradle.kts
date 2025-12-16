@@ -24,6 +24,8 @@ dependencies {
 
     // Required dependencies
     modImplementation("com.terraformersmc:modmenu:${commonMod.dep("modmenu")}")
+    modCompileOnly("maven.modrinth:xaeros-minimap:${commonMod.dep("xaeros")}_Fabric_${commonMod.dep("xaeros_mc_version")}")
+    modCompileOnlyApi("info.journeymap:journeymap-api-fabric:${commonMod.dep("jmap")}")
 }
 
 loom {

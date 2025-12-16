@@ -28,7 +28,6 @@ repositories {
         forRepositories(
             maven("https://maven.parchmentmc.org") { name = "ParchmentMC" },
             maven("https://maven.neoforged.net/releases") { name = "NeoForge" },
-            maven("https://maven.minecraftforge.net/") { name = "MinecraftForge" }
         )
         filter { includeGroup("org.parchmentmc.data") }
     }
@@ -42,7 +41,7 @@ repositories {
     maven("https://maven.terraformersmc.com/releases/") { name = "TerraformersMC" }
     maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" }
     maven("https://maven.kikugie.dev/snapshots") { name = "KikuGie Snapshots" }
-    maven("https://thedarkcolour.github.io/KotlinForForge/")
+    maven("https://maven.blamejared.com") { name = "New JourneyMap Maven" }
 }
 
 tasks {

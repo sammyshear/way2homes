@@ -11,18 +11,25 @@ authors = "${modAuthor}"
 description = "${modDescription}"
 logoFile = ""
 logoBlur = false
-displayURL = ""
+displayURL = "${modGitHub}"
 
 [[dependencies.${ modId }]]
 modId = "neoforge"
 type = "required"
 versionRange = "*"
 ordering = "NONE"
-side = "BOTH"
+side = "CLIENT"
+
+[[dpeendencies.${ modId }]]
+modId = "xaerominimap"
+type = "optional"
+versionRange = "*"
+ordering = "BEFORE"
+side = "CLIENT"
 
 [[dependencies.${ modId }]]
 modId = "minecraft"
 type = "required"
 versionRange = "[${minMinecraftVersion},)"
 ordering = "NONE"
-side = "BOTH"
+side = "CLIENT"

@@ -1,5 +1,15 @@
 name: ${modName}
 version: ${modVersion}
-main: com.example.examplemod.ExampleMod
+main: dev.sshear.way2homes.Way2Homes
 description: ${modDescription}
 api-version: ${minecraftVersion}
+dependencies:
+  server:
+    Essentials:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    HuskHomes:
+      load: BEFORE
+      required: false
+      join-classpath: true

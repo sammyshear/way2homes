@@ -15,6 +15,8 @@ neoForge {
 }
 
 dependencies {
+    compileOnly("maven.modrinth:xaeros-minimap:${commonMod.dep("xaeros")}_NeoForge_${commonMod.dep("xaeros_mc_version")}")
+    compileOnly("info.journeymap:journeymap-api-neoforge:${commonMod.dep("jmap")}")
 }
 
 neoForge {

@@ -8,21 +8,19 @@
     "${modAuthor}"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "${modGitHub}"
   },
   "license": "${modLicense}",
   "icon": "${modId}.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "com.example.examplemod.Examplemod"
+    "client": [
+      "dev.sshear.way2homes.Way2Homes"
+    ],
+    "journeymap": [
+      "dev.sshear.way2homes.jmap.JmapPlugin"
     ]
   },
-  "mixins": [
-    "${modId}.mixins.json",
-    "${modId}.fabric.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=${fabricLoaderVersion}",
     "fabric-api": "*",

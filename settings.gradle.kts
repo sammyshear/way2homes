@@ -22,12 +22,10 @@ plugins {
 
 val commonVersions = providers.gradleProperty("stonecutter_enabled_common_versions").orNull?.split(",")?.map { it.trim() } ?: emptyList()
 val fabricVersions = providers.gradleProperty("stonecutter_enabled_fabric_versions").orNull?.split(",")?.map { it.trim() } ?: emptyList()
-val forgeVersions = providers.gradleProperty("stonecutter_enabled_forge_versions").orNull?.split(",")?.map { it.trim() } ?: emptyList()
 val neoforgeVersions = providers.gradleProperty("stonecutter_enabled_neoforge_versions").orNull?.split(",")?.map { it.trim() } ?: emptyList()
 val paperVersions = providers.gradleProperty("stonecutter_enabled_paper_versions").orNull?.split(",")?.map { it.trim() } ?: emptyList()
 val dists = mapOf(
     "common" to commonVersions,
-    "forge" to forgeVersions,
     "fabric" to fabricVersions,
     "neoforge" to neoforgeVersions,
     "paper" to paperVersions
@@ -49,4 +47,4 @@ stonecutter {
         }
     }
 }
-rootProject.name = "examplemod"
+rootProject.name = "way2homes"
