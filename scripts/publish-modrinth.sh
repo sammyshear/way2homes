@@ -36,7 +36,7 @@ fi
 case "$LOADER" in
     fabric)
         LOADERS='["fabric"]'
-        DEPENDENCIES='[{"project_id":"fabric-api","dependency_type":"required"},{"project_id":"modmenu","dependency_type":"optional"}]'
+        DEPENDENCIES='[{"project_id":"P7dR8mSH","dependency_type":"required"},{"project_id":"mOgUt4GM","dependency_type":"optional"}]'
         ;;
     neoforge)
         LOADERS='["neoforge"]'
@@ -44,7 +44,7 @@ case "$LOADER" in
         ;;
     paper)
         LOADERS='["paper"]'
-        DEPENDENCIES='[{"project_id":"essentialsx","dependency_type":"optional"},{"project_id":"huskhomes","dependency_type":"optional"}]'
+        DEPENDENCIES='[{"project_id":"hXiIvTyT","dependency_type":"optional"},{"project_id":"J6U9o3JG","dependency_type":"optional"}]'
         ;;
     *)
         echo "Unknown loader: $LOADER"
