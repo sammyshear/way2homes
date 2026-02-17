@@ -1,6 +1,8 @@
+import io.github.z4kn4fein.semver.toVersion
+
 plugins {
     `multiloader-loader`
-    id("fabric-loom") version "1.11-SNAPSHOT"
+    id("fabric-loom") version "1.15-SNAPSHOT"
     kotlin("jvm") version "2.2.0"
     id("com.google.devtools.ksp") version "2.2.0-2.0.2"
     id("dev.kikugie.fletching-table.fabric") version "0.1.0-alpha.14"
@@ -24,7 +26,11 @@ dependencies {
 
     // Required dependencies
     modImplementation("com.terraformersmc:modmenu:${commonMod.dep("modmenu")}")
-    modCompileOnly("maven.modrinth:xaeros-minimap:${commonMod.dep("xaeros")}_Fabric_${commonMod.dep("xaeros_mc_version")}")
+    if (commonMod.dep("xaeros").toVersion() >= "25.3.5".toVersion()) {
+        modCompileOnly("maven.modrinth:xaeros-minimap:fabric-${commonMod.dep("xaeros_mc_version")}-${commonMod.dep("xaeros")}")
+    } else {
+        modCompileOnly("maven.modrinth:xaeros-minimap:${commonMod.dep("xaeros")}_Fabric_${commonMod.dep("xaeros_mc_version")}")
+    }
     modCompileOnlyApi("info.journeymap:journeymap-api-fabric:${commonMod.dep("jmap")}")
 }
 

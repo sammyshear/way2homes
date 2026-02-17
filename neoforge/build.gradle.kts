@@ -1,3 +1,4 @@
+import io.github.z4kn4fein.semver.toVersion
 import org.gradle.kotlin.dsl.dependencies
 
 plugins {
@@ -15,7 +16,11 @@ neoForge {
 }
 
 dependencies {
-    compileOnly("maven.modrinth:xaeros-minimap:${commonMod.dep("xaeros")}_NeoForge_${commonMod.dep("xaeros_mc_version")}")
+    if (commonMod.dep("xaeros").toVersion() >= "25.3.5".toVersion()) {
+        compileOnly("maven.modrinth:xaeros-minimap:neoforge-${commonMod.dep("xaeros_mc_version")}-${commonMod.dep("xaeros")}")
+    } else {
+        compileOnly("maven.modrinth:xaeros-minimap:${commonMod.dep("xaeros")}_NeoForge_${commonMod.dep("xaeros_mc_version")}")
+    }
     compileOnly("info.journeymap:journeymap-api-neoforge:${commonMod.dep("jmap")}")
 }
 

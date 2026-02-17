@@ -2,20 +2,27 @@ package dev.sshear.way2homes.payloads;
 
 import dev.sshear.way2homes.Constants;
 import dev.sshear.way2homes.HomeData;
-import dev.sshear.way2homes.HomeDataCodec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+//? if <1.21.11 {
 import net.minecraft.resources.ResourceLocation;
-import org.intellij.lang.annotations.Identifier;
+ //?} elif >=1.21.11 {
+/*import net.minecraft.resources.Identifier;
+*///?}
 
-import java.nio.ByteBuffer;import java.nio.charset.StandardCharsets;
+import java.nio.charset.StandardCharsets;
 
 public record HomeDataPayload(HomeData data)
         implements CustomPacketPayload {
 
+    //? if <1.21.11 {
     public static final Type<HomeDataPayload> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "home_data"));
+     //?} elif >=1.21.11 {
+    /*public static final Type<HomeDataPayload> TYPE =
+            new Type<>(Identifier.fromNamespaceAndPath(Constants.MOD_ID, "home_data"));
+    *///?}
 
     public static final StreamCodec<RegistryFriendlyByteBuf, HomeDataPayload>
             STREAM_CODEC =

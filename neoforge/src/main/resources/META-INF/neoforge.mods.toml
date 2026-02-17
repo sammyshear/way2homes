@@ -28,6 +28,13 @@ ordering = "BEFORE"
 side = "CLIENT"
 
 [[dependencies.${ modId }]]
+modId = "journeymap"
+type = "optional"
+versionRange = "*"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.${ modId }]]
 modId = "minecraft"
 type = "required"
 versionRange = "[${minMinecraftVersion},)"
