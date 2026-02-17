@@ -100,7 +100,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name:  Build ${{ matrix.loader }} for MC ${{ matrix.mc-version }}
-        run: ./gradlew :${{ matrix.loader }}:${{ matrix.mc-version }}:build
+        run: ./gradlew --configure-on-demand :${{ matrix.loader }}:${{ matrix.mc-version }}:build
 
       - name: Find JAR file
         id: find-jar
