@@ -34,6 +34,8 @@ jobs:
             mc-version: '1.21.9'
           - loader: fabric
             mc-version: '1.21.10'
+          - loader: fabric
+            mc-version: '1.21.11'
 
           # NeoForge builds
           - loader: neoforge
@@ -54,6 +56,8 @@ jobs:
             mc-version:  '1.21.9'
           - loader: neoforge
             mc-version: '1.21.10'
+          - loader: neoforge
+            mc-version: '1.21.11'
 
           # Paper builds
           - loader: paper
@@ -74,6 +78,8 @@ jobs:
             mc-version: '1.21.9'
           - loader: paper
             mc-version: '1.21.10'
+          - loader: paper
+            mc-version: '1.21.11'
 
     steps:
       - name: Checkout repository
