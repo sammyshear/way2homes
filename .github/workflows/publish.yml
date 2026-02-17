@@ -121,7 +121,7 @@ jobs:
       - name: Get mod version
         id: mod-version
         run: |
-          VERSION=$(grep "^mod. version=" gradle.properties | cut -d'=' -f2)
+          VERSION=$(grep "^mod.version=" gradle.properties | cut -d'=' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Mod version: $VERSION"
 
